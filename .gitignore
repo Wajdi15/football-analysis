@@ -1,0 +1,76 @@
+runs/
+# Fichiers de configuration de l'IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environnements virtuels
+venv/
+fenv/
+ENV/
+env/
+.virtualenv/
+venv.bak/
+ENV.bak/
+env.bak/
+
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Fichiers de logs
+*.log
+
+# Caches de paquets
+*.egg-info/
+.eggs/
+*.egg
+*.whl
+
+# Fichiers générés par pytest
+.cache/
+
+# Fichiers de test coverage
+.coverage
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+
+# Profils et fichiers de performances
+.ipynb_checkpoints/
+*.prof
+*.dat
+*.dylib
+
+# Environnements
+.Python
+.env
+env/
+.venv/
+venv/
+ENV/
+.venv.bak/
+ENV.bak/
+env.bak/
+
+# Configuration de build
+build/
+dist/
+pip-wheel-metadata/
+pip-log.txt
+*.manifest
+*.spec
+
+# Sortie de tox
+.tox/
+
+# Environnement de développement Docker
+docker-compose.yml
+Dockerfile
+
+# Autres fichiers et dossiers à ignorer
+# Dossiers générés par les outils d'intégration continue (par exemple, Jenkins)
+.jenkins/
