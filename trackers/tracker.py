@@ -15,7 +15,6 @@ class Tracker :
             #i use predict bc i need to count the gk as player
             detections_batch = self.model.predict(frames[i:i+batch_size],conf=0.1)
             detections += detections_batch
-            break
         return detections
     
     def get_object_tracks(self,frames,read_from_stub=False,stub_path=None) :
@@ -79,5 +78,16 @@ class Tracker :
 
         return tracks
   
-                
+    def draw_annotations(self,video_frames,tracks) :
+        output_video_frames = []
+        for frame_num,frame in enumerate(video_frames) :
+            frame = frame.copy()
+
+            player_dict = tracks["players"][frame_num]
+            ball_dict = tracks["ball"][frame_num]  
+            referee_dict = tracks["referees"][frame_num]
+
+            #draw Players 
+            for track_id,player in player_dict.items():
+                frame = self.draw_ellipse(frame,player["bbox"],[0,0,255],track_id)    
            
