@@ -1,3 +1,4 @@
+import numpy as np
 from ultralytics import YOLO
 import supervision as sv
 import pickle
@@ -132,7 +133,21 @@ class Tracker :
             )
 
         return frame
-        
+    
+    def draw_traingle(self,frame,bbox,color):
+        y= int(bbox[1])
+        x,_ = get_center_of_bbox(bbox)
+
+        triangle_points = np.array([
+            [x,y],
+            [x-10,y-20],
+            [x+10,y-20],
+        ])
+        cv2.drawContours(frame, [triangle_points],0,color, cv2.FILLED)
+        cv2.drawContours(frame, [triangle_points],0,(0,0,0), 2)
+
+        return frame
+    
     def draw_annotations(self,video_frames,tracks) :
         output_video_frames= []
         for frame_num, frame in enumerate(video_frames):
@@ -149,6 +164,10 @@ class Tracker :
             #draw Ref
             for track_id,ref in referee_dict.items():
                 frame = self.draw_ellipse(frame, ref["bbox"],(0,255,255))
+
+            # Draw ball 
+            for track_id, ball in ball_dict.items():
+                frame = self.draw_traingle(frame, ball["bbox"],(0,255,0))
             
             output_video_frames.append(frame)
         return output_video_frames
