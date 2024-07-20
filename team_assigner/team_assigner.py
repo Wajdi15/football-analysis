@@ -2,7 +2,7 @@ from sklearn.cluster import KMeans
 
 class TeamAssigner : 
     def __init__(self) :
-        self.team_color = {}
+        self.team_colors = {}
         self.player_team_dict = {}
 
     def get_clustering_model(self,image):
