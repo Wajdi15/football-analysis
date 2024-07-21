@@ -2,6 +2,7 @@ import numpy as np
 from ultralytics import YOLO
 import supervision as sv
 import pickle
+import pandas as pd
 import os
 import cv2
 import sys
@@ -172,3 +173,14 @@ class Tracker :
             
             output_video_frames.append(frame)   
         return output_video_frames
+
+    def interpoation_ball_positions(self,tracks) :
+        ball_positions = [x.get(1,{}).get('bbox',[]) for x in tracks]
+        df_ball_positions = pd.DataFrame(ball_positions,columns=['x1','y1','x2','y2'])
+
+        #Interpolate missing values
+        df_ball_positions = df_ball_positions.interpolate()
+        df_ball_positions = df_ball_positions.bfill()
+
+        ball_positions1 = [{1: {'bbox':x}} for x in df_ball_positions.to_numpy().tolist()]
+        return ball_positions1

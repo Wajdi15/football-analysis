@@ -11,6 +11,9 @@ def main():
     tracker = Tracker('models/best.pt')
     
     tracks = tracker.get_object_tracks(video_frames,read_from_stub=True,stub_path="stubs/track_stubs.pkl")
+    #interpolate ball positions
+    tracks['ball'] = tracker.interpoation_ball_positions(tracks['ball'])
+
 
     # Assign Player Teams
     team_assigner = TeamAssigner()
