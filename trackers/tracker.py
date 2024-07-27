@@ -7,7 +7,7 @@ import os
 import cv2
 import sys
 sys.path.append('../')
-from utils import get_bbox_width,get_center_of_bbox
+from utils import get_bbox_width,get_center_of_bbox,get_foot_position
 
 class Tracker : 
     def __init__(self,model_path) :
@@ -24,6 +24,17 @@ class Tracker :
             detections += detections_batch
         return detections
     
+    def add_position_to_tracks(sekf,tracks):
+        for object, object_tracks in tracks.items():
+            for frame_num, track in enumerate(object_tracks):
+                for track_id, track_info in track.items():
+                    bbox = track_info['bbox']
+                    if object == 'ball':
+                        position= get_center_of_bbox(bbox)
+                    else:
+                        position = get_foot_position(bbox)
+                    tracks[object][frame_num][track_id]['position'] = position
+
     def get_object_tracks(self,frames,read_from_stub=False,stub_path=None) :
 
         if read_from_stub and stub_path is not None and os.path.exists(stub_path):
