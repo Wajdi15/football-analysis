@@ -35,7 +35,7 @@ class CameraMovementEstimator() :
             with open(stub_path,'rb') as f:
                 return pickle.load(f)
             
-        camera_movement = [[0,0]*len(frames)]
+        camera_movement = [[0,0]] * len(frames)
         old_gray =  cv2.cvtColor(frames[0],cv2.COLOR_BGR2GRAY)
         old_features = cv2.goodFeaturesToTrack(old_gray,**self.features) #detect good corners to track in an image get the x , y
 
@@ -46,7 +46,7 @@ class CameraMovementEstimator() :
             max_dist = 0
             camera_movement_x,camera_movement_y = 0,0
 
-            for i , (new,old) in enumerate(new_features,old_features) :
+            for i , (new,old) in enumerate(zip(new_features,old_features)) :
                 new_features_point = new.ravel()
                 old_features_point = old.ravel() 
                 dist = measure_dist(new_features_point,old_features_point)
